@@ -11,15 +11,21 @@
 
 @if (Model.Users.Count > 0)
 {
-   
-<form asp-controller="Books" asp-action="RentBook" method="post">
-    @Html.DropDownListFor(m=>m.SelectedUserId, Model.Users.Select(u => new SelectListItem
-{
-Text = String.Format($"{u.LastName}, {u.FirstName} (ID: {u.ID})"),
-Value = u.ID.ToString()
-}), "Select user")
-    <input type="submit" value="Rent">
-</form>
+
+    <form asp-controller="Books" asp-action="RentBook" asp-route-userId="@Model.SelectedUserId" asp-route-bookId="@Model.Book.ID" method="post">
+        <select asp-for="SelectedUserId" asp-items="Model.Users.Select(u => new SelectListItem
+                {
+                Text =u.LastName,
+                Value = u.ID.ToString()
+                })"></select>
+
+        @*@Html.DropDownListFor(m=>m.SelectedUserId, Model.Users.Select(u => new SelectListItem
+            {
+            Text = String.Format($"{u.LastName}, {u.FirstName} (ID: {u.ID})"),
+            Value = u.ID.ToString()
+            }), "Select user")*@
+        <input type="submit" value="Rent">
+    </form>
 }
 
 

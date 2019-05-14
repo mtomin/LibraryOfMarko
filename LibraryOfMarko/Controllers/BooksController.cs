@@ -99,10 +99,11 @@ namespace LibraryOfMarko.Controllers
         }
         [Route("Books/RentBook/{bookId}")]
         [HttpPost]
-        public IActionResult RentBook(int bookId, int userId)
+        [ActionName("RentBook")]
+        public IActionResult RentBookUpdateDB(int bookId, RentBookViewModel viewModel)
         {
-            _iBookRepository.RentBook(bookId, userId);
-            return RedirectToAction("UserDetails", "Users", new { id = userId });
+            _iBookRepository.RentBook(bookId, viewModel.SelectedUserId);
+            return RedirectToAction("UserDetails", "Users", new { id = viewModel.SelectedUserId });
         }
     }
 }
