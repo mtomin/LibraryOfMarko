@@ -1,0 +1,9 @@
+﻿@model Book
+
+@Model.Title<br>
+@Model.Author<br>
+@Model.ID<br>
+
+<a asp-controller="Books" asp-action="EditBook" asp-route-bookID="@Model.ID" method="get">Edit book</a>
+
+<a asp-controller="Books" asp-action="RentBook" asp-route-bookID="@Model.ID">Rent book</a>

@@ -1,0 +1,14 @@
+﻿@model List<Book>
+Book search
+
+<form asp-controller="Books" asp-action="BookSearch">
+    Title: <input type="text" name="query">
+    <input type="submit" value="Search" />
+</form>
+
+@if (Model!=null){
+foreach (Book book in Model)
+{
+    <p><a asp-controller="Books" asp-action="BookDetails" asp-route-bookID="@book.ID">@book.Title</a></p>
+}
+}

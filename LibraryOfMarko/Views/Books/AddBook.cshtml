@@ -1,0 +1,20 @@
+﻿@model Book
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form asp-controller="Books" asp-action="AddBook">
+        <div>
+            <label asp-for="Title">Book title</label>
+            <input asp-for="Title">
+        </div>
+        <div>
+            <label asp-for="Author">Author (Firstname Lastname)</label>
+            <input asp-for="Author">
+        </div>
+        <div>
+            <label asp-for="CopiesAvailable">Number of copies</label>
+            <input asp-for="CopiesAvailable">
+        </div>
+        <div>
+            <input type="submit" value="Add" />
+        </div>
+    </form>

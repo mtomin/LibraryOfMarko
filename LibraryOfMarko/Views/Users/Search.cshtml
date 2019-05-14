@@ -1,0 +1,32 @@
+﻿@model List<User>
+@section NavigationBar
+{
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Search">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="AddUser">Add user</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+
+<form asp-controller="Users" asp-action="search">
+    Last name: <input type="text" name="query">
+    <input type="submit" value="Search" />
+</form>
+
+@if (Model != null)
+{
+    foreach (User user in Model)
+    {
+        <p><a asp-controller="Users" asp-action="UserDetails" asp-route-id="@user.ID">@user.LastName, @user.FirstName</a></p>;
+    }
+}
+

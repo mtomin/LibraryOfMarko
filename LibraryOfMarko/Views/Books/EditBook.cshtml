@@ -1,0 +1,23 @@
+﻿@model Book
+
+<form action="EditBook" method="post">
+    <div>
+        <label asp-for="Title">Book title</label>
+        <input asp-for="Title" value="@Model.Title">
+    </div>
+    <div>
+        <label asp-for="Author">Author</label>
+        <input asp-for="Author" value="@Model.Author">
+    </div>
+    <div>
+        <label asp-for="CopiesAvailable">Number of copies available</label>
+        <input asp-for="CopiesAvailable" value="@Model.CopiesAvailable">
+    </div>
+    <div>
+        <label asp-for="ID">Book ID</label>
+        <input asp-for="ID" readonly="readonly" value="@Model.ID">
+    </div>
+    <div>
+        <input type="submit" value="Edit" />
+    </div>
+</form>

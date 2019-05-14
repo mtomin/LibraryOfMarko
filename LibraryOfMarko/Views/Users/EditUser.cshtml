@@ -1,0 +1,25 @@
+﻿@model User
+
+<form asp-controller="Users" asp-action="EditUser" asp-route-userID="@Model.ID" method="post">
+    <div>
+        <label asp-for="FirstName">First Name(*)</label>
+        <input asp-for="FirstName">
+    </div>
+    <div>
+        <label asp-for="LastName">Last Name(*)</label>
+        <input asp-for="LastName">
+    </div>
+    <div>
+        <label asp-for="Address">Address(*)</label>
+        <input asp-for="Address">
+    </div>
+    <div>
+        <label asp-for="Email">E-mail</label>
+        <input asp-for="Email">
+    </div>
+    <div>
+        <label asp-for="ID">ID</label>
+        <input asp-for="ID" readonly="readonly">
+    </div>
+    <input type="submit" value="Edit" />
+</form>

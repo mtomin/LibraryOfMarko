@@ -1,0 +1,25 @@
+﻿@model LibraryOfMarko.Views.ViewModels.RentBookViewModel
+
+@Model.Book.Title<br>
+@Model.Book.Author<br>
+@Model.Book.ID<br>
+
+<form asp-controller="Users" asp-action="RentBook" method="get">
+    Last name: <input type="text" name="user">
+    <input type="submit" value="Search" />
+</form>
+
+@if (Model.Users.Count > 0)
+{
+   
+<form asp-controller="Books" asp-action="RentBook" method="post">
+    @Html.DropDownListFor(m=>m.SelectedUserId, Model.Users.Select(u => new SelectListItem
+{
+Text = String.Format($"{u.LastName}, {u.FirstName} (ID: {u.ID})"),
+Value = u.ID.ToString()
+}), "Select user")
+    <input type="submit" value="Rent">
+</form>
+}
+
+

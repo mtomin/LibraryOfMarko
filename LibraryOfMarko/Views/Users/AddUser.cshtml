@@ -1,0 +1,39 @@
+﻿@model User
+@section NavigationBar
+{
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Search">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="AddUser">Add user</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+<div>Add new users. Fields marked with (*) are mandatory.</div>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form asp-controller="Users" asp-action="AddUser" method="post">
+    <div>
+        <label asp-for="FirstName">First Name(*)</label>
+        <input asp-for="FirstName">
+    </div>
+    <div>
+        <label asp-for="LastName">Last Name(*)</label>
+        <input asp-for="LastName">
+    </div>
+    <div>
+        <label asp-for="Address">Address(*)</label>
+        <input asp-for="Address">
+    </div>
+    <div>
+        <label asp-for="Email">E-mail</label>
+        <input asp-for="Email">
+    </div>
+    <input type="submit" value="Add" />
+</form>
