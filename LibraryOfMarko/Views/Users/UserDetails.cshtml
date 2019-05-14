@@ -30,10 +30,8 @@
         <th width="150">Date Rented</th>
         <th width="150">Returned</th>
     </tr>
-    <tr>
         @foreach (UserData entry in Model.Where(e=>e.Title!=null))
         {
-            <td>@entry.Title</td><td>@entry.DateRented.ToShortDateString()</td><td>@(@entry.ReturnedFlag==1 ? "Yes":"No")</td>
+            <tr><td>@entry.Title</td><td>@entry.DateRented.ToShortDateString()</td><td>@(@entry.ReturnedFlag==1 ? "Yes":"No")</td></tr>
         }
-    </tr>
 </table>

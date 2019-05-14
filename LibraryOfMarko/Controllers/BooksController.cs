@@ -97,13 +97,11 @@ namespace LibraryOfMarko.Controllers
             };
             return View(RentBookViewModel);
         }
-        [Route("Books/RentBook/{bookId}")]
-        [HttpPost]
-        [ActionName("RentBook")]
-        public IActionResult RentBookUpdateDB(int bookId, RentBookViewModel viewModel)
+        //[Route("Books/RentBook/{bookId}")]
+        public IActionResult RentBookUpdateDB(int bookId, int selectedUserId)
         {
-            _iBookRepository.RentBook(bookId, viewModel.SelectedUserId);
-            return RedirectToAction("UserDetails", "Users", new { id = viewModel.SelectedUserId });
+            _iBookRepository.RentBook(bookId, selectedUserId);
+            return RedirectToAction("UserDetails", "Users", new { id = selectedUserId });
         }
     }
 }

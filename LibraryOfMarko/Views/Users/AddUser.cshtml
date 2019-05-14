@@ -17,8 +17,9 @@
     </nav>
 }
 <div>Add new users. Fields marked with (*) are mandatory.</div>
+
 <div asp-validation-summary="All" class="text-danger"></div>
-<form asp-controller="Users" asp-action="AddUser" method="post">
+<form asp-controller="Users" asp-action="AddUser">
     <div>
         <label asp-for="FirstName">First Name(*)</label>
         <input asp-for="FirstName">

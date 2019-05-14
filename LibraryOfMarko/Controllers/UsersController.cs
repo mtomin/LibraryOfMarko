@@ -43,9 +43,9 @@ namespace LibraryOfMarko.Controllers
         public IActionResult AddUser(User newUser)
         {
             ViewBag.Title = "Add new user";
-            _iUserRepository.AddUser(newUser);
             if (ModelState.IsValid)
             {
+                _iUserRepository.AddUser(newUser);
                 return RedirectToAction("UserDetails", new { id = newUser.ID });
             }
             return View();

@@ -12,10 +12,10 @@
 @if (Model.Users.Count > 0)
 {
 
-    <form asp-controller="Books" asp-action="RentBook" asp-route-userId="@Model.SelectedUserId" asp-route-bookId="@Model.Book.ID" method="post">
+    <form asp-controller="Books" asp-action="RentBookUpdateDB" asp-route-bookId="@Model.Book.ID">
         <select asp-for="SelectedUserId" asp-items="Model.Users.Select(u => new SelectListItem
                 {
-                Text =u.LastName,
+                Text = @String.Format($"{u.LastName}, {u.FirstName} (ID: {u.ID})"),
                 Value = u.ID.ToString()
                 })"></select>
 
