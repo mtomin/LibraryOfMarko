@@ -1,4 +1,5 @@
-﻿@section NavigationBar
+﻿@model List<Book>
+@section NavigationBar
 {
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
@@ -15,4 +16,19 @@
         </div>
     </nav>
 }
-Hello from books!
+
+<div class="text-center">Most rented books:</div>
+<br>
+<div class="card-deck">
+    @foreach (Book book in Model)
+    {
+        <div class="card" style="width: auto">
+            <div class="card-body">
+                <div class="card-text" style="text-align:center">
+                    @book.Title<br>by<br>
+                    @book.Author
+                </div>
+            </div>
+        </div>
+    }
+</div>

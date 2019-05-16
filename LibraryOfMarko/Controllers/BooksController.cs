@@ -17,10 +17,12 @@ namespace LibraryOfMarko.Controllers
             _iBookRepository = iBookRepository;
             _iUserRepository = iUserRepository;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             ViewBag.Title = "Books";
-            return View();
+            List<Book> model = _iBookRepository.MostRentedBooks();
+            return View(model);
         }
         [HttpGet]
         public IActionResult Search()
@@ -52,11 +54,11 @@ namespace LibraryOfMarko.Controllers
             }
             return View();
         }
-        [Route("Books/BookDetails/{bookID}")]
+        [HttpGet]
         public IActionResult BookDetails(int bookID)
         {
-            ViewBag.Title = "Add new book";
             Book model = _iBookRepository.GetBook(bookID);
+            ViewBag.Title = model.Title;
             return View(model);
         }
         [HttpGet]
@@ -83,25 +85,38 @@ namespace LibraryOfMarko.Controllers
         public IActionResult RentBook(int bookId, string user)
         {
             Book book = _iBookRepository.GetBook(bookId);
-            List<User> users = new List<User>();
-            if (user != null)
+            if (_iBookRepository.IsBookAvailable(book))
             {
-                users = _iUserRepository.SearchUser(user);
-            }
+                List<User> users = new List<User>();
+                if (user != null)
+                {
+                    users = _iUserRepository.SearchUser(user);
+                }
 
-            ViewBag.Title = String.Format($"Rent {book.Title}");
-            var RentBookViewModel = new RentBookViewModel
+                ViewBag.Title = String.Format($"Rent {book.Title}");
+                var RentBookViewModel = new RentBookViewModel
+                {
+                    Book = book,
+                    Users = users
+                };
+                return View(RentBookViewModel);
+            }
+            else
             {
-                Book = book,
-                Users = users
-            };
-            return View(RentBookViewModel);
+                ViewBag.Title = "Book currently not available";
+                return View("RentBookFailed", book);
+            }
         }
-        //[Route("Books/RentBook/{bookId}")]
+
         public IActionResult RentBookUpdateDB(int bookId, int selectedUserId)
         {
             _iBookRepository.RentBook(bookId, selectedUserId);
             return RedirectToAction("UserDetails", "Users", new { id = selectedUserId });
+        }
+        public IActionResult ReturnBook(int bookId, int userId)
+        {
+            _iBookRepository.ReturnBook(bookId, userId);
+            return RedirectToAction("UserDetails", "Users", new { id = userId });
         }
     }
 }

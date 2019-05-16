@@ -13,5 +13,8 @@ namespace LibraryOfMarko.Models
         Book GetBook(int id);
         List<Book> SearchBook(string query);
         void RentBook(int bookId, int userId);
+        void ReturnBook(int bookId, int userId);
+        bool IsBookAvailable(Book book);
+        List<Book> MostRentedBooks();
     }
 }

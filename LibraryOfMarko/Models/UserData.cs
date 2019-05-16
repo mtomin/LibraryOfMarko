@@ -16,6 +16,6 @@ namespace LibraryOfMarko.Models
         public string Title { get; set; }
         public string Author { get; set; }
         public DateTime DateRented { get; set; }
-        public int ReturnedFlag { get; set; }
+        public DateTime? DateReturned { get; set; }
     }
 }

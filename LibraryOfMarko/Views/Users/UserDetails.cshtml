@@ -17,21 +17,48 @@
         </div>
     </nav>
 }
+<p class="card-body">
+    @Model[0].FirstName @Model[0].LastName<br>
+    @Model[0].Address<br>
+    @Model[0].Email<br>
+    @Model[0].UserID<br>
+</p>
 
-@Model[0].FirstName @Model[0].LastName<br>
-@Model[0].Address<br>
-@Model[0].Email<br>
-
-<a asp-controller="Users" asp-action="RemoveUser" asp-route-userid="@Model[0].UserID">Remove user</a>
-<a asp-controller="Users" asp-action="EditUser" asp-route-userId="@Model[0].UserID">Edit user</a>
-<table title="Books rented:">
+<a asp-controller="Users" asp-action="RemoveUser" asp-route-userid="@Model[0].UserID" class="btn btn-outline-primary">Remove user</a>
+<a asp-controller="Users" asp-action="EditUser" asp-route-userId="@Model[0].UserID" class="btn btn-outline-primary">Edit user</a>
+<br><br>
+Currently rented books
+<table title="Currently rented books:" class="table-responsive-lg">
     <tr>
         <th width="150">Title</th>
         <th width="150">Date Rented</th>
-        <th width="150">Returned</th>
     </tr>
-        @foreach (UserData entry in Model.Where(e=>e.Title!=null))
-        {
-            <tr><td>@entry.Title</td><td>@entry.DateRented.ToShortDateString()</td><td>@(@entry.ReturnedFlag==1 ? "Yes":"No")</td></tr>
-        }
+    @foreach (UserData entry in Model.Where(e => e.Title != null && e.DateReturned == null))
+    {
+        <tr>
+            <td>@entry.Title</td>
+            <td>@entry.DateRented.ToShortDateString()</td>
+            @if (@entry.DateReturned == null)
+            {
+                <td><a asp-controller="Books" asp-action="ReturnBook" asp-route-bookId="@entry.BookID" asp-route-userId="@entry.UserID" class="btn btn-primary">Return book</a></td>
+            }
+        </tr>
+    }
+</table>
+<br><br>
+Renting history
+<table class="table-responsive table-hover">
+    <tr class="clickable" data-toggle="collapse" id="order-1">
+        <th width="150">Title</th>
+        <th width="150">Date Rented</th>
+        <th width="150">Date Returned</th>
+    </tr>
+    @foreach (UserData entry in Model.Where(e => e.Title != null && e.DateReturned != null))
+    {
+        <tr>
+            <td>@entry.Title</td>
+            <td>@entry.DateRented.ToShortDateString()</td>
+            <td>@(((DateTime)entry.DateReturned).ToShortDateString())</td>
+        </tr>
+    }
 </table>

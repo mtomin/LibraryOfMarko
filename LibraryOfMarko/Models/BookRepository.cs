@@ -44,6 +44,21 @@ namespace LibraryOfMarko.Models
             return book;
         }
 
+        public bool IsBookAvailable(Book book)
+        {
+            return book.CopiesAvailable == 0 ? false : true;
+        }
+
+        public List<Book> MostRentedBooks()
+        {
+            List<Book> books = new List<Book>();
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                books=db.Query<Book>("SelectMostRentedBooks", new { @number=5 }, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return books;
+        }
+
         public void RemoveBook(int id)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
@@ -56,16 +71,27 @@ namespace LibraryOfMarko.Models
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                db.Execute("RentBook", new { @UserId=userId, @BookId=bookId, @DateRented=DateTime.Now }, commandType: CommandType.StoredProcedure);
+                db.Execute("RentBook", new { @UserId = userId, @BookId = bookId, @DateRented = DateTime.Now }, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void ReturnBook(int bookId, int userId)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                db.Execute("ReturnBook", new { userId, bookId, dateReturned = DateTime.Now }, commandType: CommandType.StoredProcedure);
             }
         }
 
         public List<Book> SearchBook(string query)
         {
             List<Book> books = new List<Book>();
-            using (IDbConnection db = new SqlConnection(connectionString))
+            if (query != null)
             {
-                books = db.Query<Book>("SearchBooks", new { query = query.ToLower() }, commandType: CommandType.StoredProcedure).ToList();
+                using (IDbConnection db = new SqlConnection(connectionString))
+                {
+                    books = db.Query<Book>("SearchBooks", new { query = query.ToLower() }, commandType: CommandType.StoredProcedure).ToList();
+                }
             }
             return books;
         }

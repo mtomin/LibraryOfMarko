@@ -1,4 +1,23 @@
 ﻿@model List<Book>
+
+@section NavigationBar
+{
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Search">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="AddBook">Add book</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+
 Book search
 
 <form asp-controller="Books" asp-action="BookSearch">
@@ -6,9 +25,10 @@ Book search
     <input type="submit" value="Search" />
 </form>
 
-@if (Model!=null){
-foreach (Book book in Model)
+@if (Model != null)
 {
-    <p><a asp-controller="Books" asp-action="BookDetails" asp-route-bookID="@book.ID">@book.Title</a></p>
-}
+    foreach (Book book in Model)
+    {
+        <p><a asp-controller="Books" asp-action="BookDetails" asp-route-bookID="@book.ID">@book.Title</a></p>
+    }
 }

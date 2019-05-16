@@ -76,9 +76,12 @@ namespace LibraryOfMarko.Models
         public List<User> SearchUser(string query)
         {
             List<User> users = new List<User>();
-            using (IDbConnection db = new SqlConnection(connectionString))
+            if (query != null)
             {
-                users=db.Query<User>("SearchUsers", new { query=query.ToLower() }, commandType: CommandType.StoredProcedure).ToList();
+                using (IDbConnection db = new SqlConnection(connectionString))
+                {
+                    users = db.Query<User>("SearchUsers", new { query = query.ToLower() }, commandType: CommandType.StoredProcedure).ToList();
+                }
             }
             return users;
         }
