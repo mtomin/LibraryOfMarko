@@ -61,4 +61,4 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
-Views/* linguist-detectable=false
+LibraryOfMarko/Views/* linguist-detectable=false
