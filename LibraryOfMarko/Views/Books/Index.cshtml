@@ -22,11 +22,15 @@
 <div class="card-deck">
     @foreach (Book book in Model)
     {
+        string imagePath = book.CoverPath ?? "~/images/cover-generic.png";
         <div class="card" style="width: auto">
+            <img src="@imagePath" asp-append-version="false" height="150"><br>
             <div class="card-body">
                 <div class="card-text" style="text-align:center">
-                    @book.Title<br>by<br>
-                    @book.Author
+                    <a asp-action="BookDetails" asp-controller="Books" asp-route-bookId="@book.ID">
+                        @book.Title<br>by<br>
+                        @book.Author
+                    </a>
                 </div>
             </div>
         </div>

@@ -1,7 +1,8 @@
 ﻿@model Book
+@{string imagePath = Model.CoverPath ?? "~/images/cover-generic.png";}
 
 @section NavigationBar
-{
+    {
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
@@ -17,13 +18,15 @@
         </div>
     </nav>
 }
-
-<p class="card-body">
-    @Model.Title<br>
-    @Model.Author<br>
-    Copies available: @Model.CopiesAvailable
-</p>
-
-<a asp-controller="Books" asp-action="EditBook" asp-route-bookID="@Model.ID" method="get" class="btn btn-primary">Edit book</a>
-
-<a asp-controller="Books" asp-action="RentBook" asp-route-bookID="@Model.ID" class="btn btn-primary">Rent book</a>
+<div class="card" style="min-width:100px; max-width:300px">
+    <p class="card-body" style="align-self:center">
+        <img src="@imagePath" asp-append-version="false" width="150" /><br>
+        @Model.Title<br>
+        @Model.Author<br>
+        Copies available: @Model.CopiesAvailable
+    </p>
+</div>
+<div class="card-footer"  style="min-width:100px; max-width:300px;">
+    <a style="float:left" asp-controller="Books" asp-action="EditBook" asp-route-bookID="@Model.ID" method="get" class="btn btn-primary">Edit book</a>
+    <a style="float:right" asp-controller="Books" asp-action="RentBook" asp-route-bookID="@Model.ID" class="btn btn-primary">Rent book</a>
+</div>

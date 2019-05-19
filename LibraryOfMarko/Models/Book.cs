@@ -15,5 +15,6 @@ namespace LibraryOfMarko.Models
         public string Author { get; set; }
         [Required]
         public int CopiesAvailable { get; set; }
+        public string CoverPath { get; set; }
     }
 }

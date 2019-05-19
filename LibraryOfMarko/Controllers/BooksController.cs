@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using LibraryOfMarko.Models;
 using LibraryOfMarko.Views.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryOfMarko.Controllers
@@ -12,10 +14,13 @@ namespace LibraryOfMarko.Controllers
     {
         private readonly IBookRepository _iBookRepository;
         private readonly IUserRepository _iUserRepository;
-        public BooksController(IBookRepository iBookRepository, IUserRepository iUserRepository)
+        private readonly IHostingEnvironment _iHostingEnvironment;
+
+        public BooksController(IBookRepository iBookRepository, IUserRepository iUserRepository, IHostingEnvironment iHostingEnvironment)
         {
             _iBookRepository = iBookRepository;
             _iUserRepository = iUserRepository;
+            _iHostingEnvironment = iHostingEnvironment;
         }
         [HttpGet]
         public IActionResult Index()
@@ -44,13 +49,20 @@ namespace LibraryOfMarko.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddBook(Book newBook)
+        public IActionResult AddBook(AddBookViewModel newBookInfo)
         {
             ViewBag.Title = "Book added";
             if (ModelState.IsValid)
             {
-                _iBookRepository.AddBook(newBook);
-                return RedirectToAction("BookDetails", new { bookID = newBook.ID });
+                Book book = newBookInfo.Book;
+                if (newBookInfo.Cover != null)
+                {
+                    string uniqueFilename = Guid.NewGuid() + "_" + newBookInfo.Cover.FileName;
+                    book.CoverPath = uniqueFilename;
+                    newBookInfo.Cover.CopyTo(new FileStream(Path.Combine(_iHostingEnvironment.WebRootPath, "images", uniqueFilename), FileMode.Create));
+                }
+                _iBookRepository.AddBook(book);
+                return RedirectToAction("BookDetails", new { bookID = book.ID });
             }
             return View();
         }
@@ -59,6 +71,10 @@ namespace LibraryOfMarko.Controllers
         {
             Book model = _iBookRepository.GetBook(bookID);
             ViewBag.Title = model.Title;
+            if (model.CoverPath != null)
+            {
+                model.CoverPath = Path.Combine("~/images", model.CoverPath);
+            }
             return View(model);
         }
         [HttpGet]

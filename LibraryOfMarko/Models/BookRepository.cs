@@ -22,7 +22,7 @@ namespace LibraryOfMarko.Models
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                newBook.ID = db.Query<int>("AddBook @Title, @Author, @CopiesAvailable", newBook).SingleOrDefault();
+                newBook.ID = db.Query<int>("AddBook @Title, @Author, @CopiesAvailable, @CoverPath", newBook).SingleOrDefault();
             }
         }
 

@@ -1,4 +1,4 @@
-﻿@model Book
+﻿@model LibraryOfMarko.Views.ViewModels.AddBookViewModel
 
 @section NavigationBar
 {
@@ -19,18 +19,22 @@
 }
 
 <div asp-validation-summary="All" class="text-danger"></div>
-<form asp-controller="Books" asp-action="AddBook">
+<form asp-controller="Books" asp-action="AddBook" enctype="multipart/form-data">
     <div>
-        <label asp-for="Title">Book title</label>
-        <input asp-for="Title">
+        <label asp-for="Book.Title">Book title</label>
+        <input asp-for="Book.Title">
     </div>
     <div>
-        <label asp-for="Author">Author (Firstname Lastname)</label>
-        <input asp-for="Author">
+        <label asp-for="Book.Author">Author (Firstname Lastname)</label>
+        <input asp-for="Book.Author">
     </div>
     <div>
-        <label asp-for="CopiesAvailable">Number of copies</label>
-        <input asp-for="CopiesAvailable">
+        <label asp-for="Book.CopiesAvailable">Number of copies</label>
+        <input asp-for="Book.CopiesAvailable">
+    </div>
+    <div>
+        <label asp-for="Cover">Book cover (optional)</label>
+        <input asp-for="Cover">
     </div>
     <div>
         <input type="submit" value="Add" />
