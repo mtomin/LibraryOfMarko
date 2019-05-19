@@ -18,7 +18,7 @@ namespace LibraryOfMarko.Models
         public UserRepository(IConfiguration config)
         {
             _config = config;
-            connectionString = _config.GetConnectionString("LibraryDB");
+            connectionString = _config.GetConnectionString("LibraryDB").Replace("%DataDirectory%", Environment.CurrentDirectory);
         }
         public void AddUser(User newUser)
         {

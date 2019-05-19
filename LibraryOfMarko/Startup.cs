@@ -18,6 +18,8 @@ namespace LibraryOfMarko
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            string databaseDirectory = Environment.CurrentDirectory;
+            AppDomain.CurrentDomain.SetData("DataDirectory", databaseDirectory);
         }
 
         public IConfiguration Configuration { get; }

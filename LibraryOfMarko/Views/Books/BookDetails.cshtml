@@ -19,14 +19,14 @@
     </nav>
 }
 <div class="card" style="min-width:100px; max-width:300px">
-    <p class="card-body" style="align-self:center">
-        <img src="@imagePath" asp-append-version="false" width="150" /><br>
+    <div class="card-body" style="align-self:center">
+        <img src="@imagePath" asp-append-version="false" width="150"><br>
         @Model.Title<br>
         @Model.Author<br>
         Copies available: @Model.CopiesAvailable
-    </p>
-</div>
-<div class="card-footer"  style="min-width:100px; max-width:300px;">
-    <a style="float:left" asp-controller="Books" asp-action="EditBook" asp-route-bookID="@Model.ID" method="get" class="btn btn-primary">Edit book</a>
-    <a style="float:right" asp-controller="Books" asp-action="RentBook" asp-route-bookID="@Model.ID" class="btn btn-primary">Rent book</a>
+    </div>
+    <div class="card-footer" style="min-width:100px; max-width:300px;">
+        <a style="float:left" asp-controller="Books" asp-action="EditBook" asp-route-bookID="@Model.ID" method="get" class="btn btn-primary">Edit book</a>
+        <a style="float:right" asp-controller="Books" asp-action="RentBook" asp-route-bookID="@Model.ID" class="btn btn-primary">Rent book</a>
+    </div>
 </div>

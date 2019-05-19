@@ -59,7 +59,8 @@ namespace LibraryOfMarko.Controllers
                 {
                     string uniqueFilename = Guid.NewGuid() + "_" + newBookInfo.Cover.FileName;
                     book.CoverPath = uniqueFilename;
-                    newBookInfo.Cover.CopyTo(new FileStream(Path.Combine(_iHostingEnvironment.WebRootPath, "images", uniqueFilename), FileMode.Create));
+                    using (var fs = new FileStream(Path.Combine(_iHostingEnvironment.WebRootPath, "images", uniqueFilename), FileMode.Create))
+                        newBookInfo.Cover.CopyTo(fs);
                 }
                 _iBookRepository.AddBook(book);
                 return RedirectToAction("BookDetails", new { bookID = book.ID });
@@ -80,19 +81,29 @@ namespace LibraryOfMarko.Controllers
         [HttpGet]
         public IActionResult EditBook(int bookID)
         {
-            Book editedBook = _iBookRepository.GetBook(bookID);
-            ViewBag.Title = String.Format($"Editing {editedBook.Title}");
-            return View(editedBook);
+            AddBookViewModel model = new AddBookViewModel
+            {
+                Book = _iBookRepository.GetBook(bookID)
+            };
+            ViewBag.Title = String.Format($"Editing {model.Book.Title}");
+            return View(model);
         }
         [HttpPost]
         [ActionName("EditBook")]
-        public IActionResult EditBookUpdate(Book editedBook)
+        public IActionResult EditBookUpdate(AddBookViewModel editedBook)
         {
             if (ModelState.IsValid)
             {
-                ViewBag.Title = String.Format($"{editedBook.Title} sucessfully edited!");
-                _iBookRepository.EditBook(editedBook);
-                return RedirectToAction("BookDetails", new { bookID = editedBook.ID });
+                if (editedBook.Cover != null)
+                {
+                    string uniqueFilename = Guid.NewGuid() + "_" + editedBook.Cover.FileName;
+                    editedBook.Book.CoverPath = uniqueFilename;
+                    using (var fs = new FileStream(Path.Combine(_iHostingEnvironment.WebRootPath, "images", uniqueFilename), FileMode.Create))
+                        editedBook.Cover.CopyTo(fs);
+                }
+                ViewBag.Title = String.Format($"{editedBook.Book.Title} sucessfully edited!");
+                _iBookRepository.EditBook(editedBook.Book);
+                return RedirectToAction("BookDetails", new { bookID = editedBook.Book.ID });
             }
             return View();
         }

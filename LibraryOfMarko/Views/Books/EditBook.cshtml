@@ -1,4 +1,4 @@
-﻿@model Book
+﻿@model LibraryOfMarko.Views.ViewModels.AddBookViewModel
 
 @section NavigationBar
 {
@@ -18,22 +18,26 @@
     </nav>
 }
 
-<form action="EditBook" method="post">
+<form action="EditBook" method="post" enctype="multipart/form-data">
     <div>
-        <label asp-for="Title">Book title</label>
-        <input asp-for="Title" value="@Model.Title">
+        <label asp-for="Book.Title">Book title</label>
+        <input asp-for="Book.Title" value="@Model.Book.Title">
     </div>
     <div>
-        <label asp-for="Author">Author</label>
-        <input asp-for="Author" value="@Model.Author">
+        <label asp-for="Book.Author">Author</label>
+        <input asp-for="Book.Author" value="@Model.Book.Author">
     </div>
     <div>
-        <label asp-for="CopiesAvailable">Number of copies available</label>
-        <input asp-for="CopiesAvailable" value="@Model.CopiesAvailable">
+        <label asp-for="Book.CopiesAvailable">Number of copies available</label>
+        <input asp-for="Book.CopiesAvailable" value="@Model.Book.CopiesAvailable">
     </div>
     <div>
-        <label asp-for="ID">Book ID</label>
-        <input asp-for="ID" readonly="readonly" value="@Model.ID">
+        <label asp-for="Book.ID">Book ID</label>
+        <input asp-for="Book.ID" readonly="readonly" value="@Model.Book.ID">
+    </div>
+    <div>
+        <label asp-for="Cover">Book cover (optional)</label>
+        <input asp-for="Cover">
     </div>
     <div>
         <input type="submit" value="Edit" />

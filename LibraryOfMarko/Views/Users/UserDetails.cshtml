@@ -1,7 +1,7 @@
 ﻿@model List<UserData>
 <title>@Model[0].FirstName @Model[0].LastName</title>
 @section NavigationBar
-{
+    {
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
@@ -27,7 +27,7 @@
 <a asp-controller="Users" asp-action="RemoveUser" asp-route-userid="@Model[0].UserID" class="btn btn-outline-primary">Remove user</a>
 <a asp-controller="Users" asp-action="EditUser" asp-route-userId="@Model[0].UserID" class="btn btn-outline-primary">Edit user</a>
 <br><br>
-Currently rented books
+    Currently rented books
 <table title="Currently rented books:" class="table-responsive-lg">
     <tr>
         <th width="150">Title</th>
@@ -46,19 +46,31 @@ Currently rented books
     }
 </table>
 <br><br>
-Renting history
-<table class="table-responsive table-hover">
-    <tr class="clickable" data-toggle="collapse" id="order-1">
-        <th width="150">Title</th>
-        <th width="150">Date Rented</th>
-        <th width="150">Date Returned</th>
-    </tr>
-    @foreach (UserData entry in Model.Where(e => e.Title != null && e.DateReturned != null))
-    {
-        <tr>
-            <td>@entry.Title</td>
-            <td>@entry.DateRented.ToShortDateString()</td>
-            <td>@(((DateTime)entry.DateReturned).ToShortDateString())</td>
-        </tr>
-    }
-</table>
+
+@if (Model.Where(e => e.Title != null && e.DateReturned == null).Count()==0)
+{
+    <div><i>No renting history to show</i></div>
+}
+else
+{
+    <div>Renting history (click to expand)</div>
+    <table class="table table-responsive table-hover">
+        <thead>
+            <tr class="clickable" data-toggle="collapse" data-target="#collapsible" style="cursor:crosshair">
+                <th width="300px">Title</th>
+                <th>Date Rented</th>
+                <th>Date Returned</th>
+            </tr>
+        </thead>
+        <tbody id="collapsible" class="collapse">
+            @foreach (UserData entry in Model.Where(e => e.Title != null && e.DateReturned != null))
+            {
+                <tr>
+                    <td>@entry.Title</td>
+                    <td>@entry.DateRented.ToShortDateString()</td>
+                    <td>@(((DateTime)entry.DateReturned).ToShortDateString())</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

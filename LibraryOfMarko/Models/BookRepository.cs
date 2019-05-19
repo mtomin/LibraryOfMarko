@@ -16,7 +16,7 @@ namespace LibraryOfMarko.Models
         public BookRepository(IConfiguration config)
         {
             _config = config;
-            connectionString = _config.GetConnectionString("LibraryDB");
+            connectionString = _config.GetConnectionString("LibraryDB").Replace("%DataDirectory%", Environment.CurrentDirectory); ;
         }
         public void AddBook(Book newBook)
         {
