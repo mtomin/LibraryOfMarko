@@ -17,8 +17,25 @@
 }
 
 @model List<User>
-    Hello from users!
-@foreach (User user in Model)
-{
-<div><a asp-controller="Users" asp-action="UserDetails" asp-route-id=@user.ID>@user.LastName, @user.FirstName</a></div>
-}
+    Use the provided search option for finding users by their last name or click on a letter to display all users whose last name starts with that letter.
+@*@foreach (User user in Model)
+    {
+    <div><a asp-controller="Users" asp-action="UserDetails" asp-route-id=@user.ID>@user.LastName, @user.FirstName</a></div>
+    }*@
+
+<table class="table table-responsive">
+
+    <tr style="border:hidden">
+        @foreach (char letter in Enumerable.Range('A', 'Z' - 'A' + 1).Select(i => (char)i))
+        {
+            <td style="column-width:10px">
+                <div>
+                    <form method="post" asp-controller="Users" asp-action="Search" asp-route-query="@letter">
+                        <input type="submit" value="@letter">
+                    </form>
+                </div>
+            </td>
+        }
+    </tr>
+
+</table>
