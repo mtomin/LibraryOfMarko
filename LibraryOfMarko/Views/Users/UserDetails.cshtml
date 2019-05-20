@@ -47,7 +47,7 @@
 </table>
 <br><br>
 
-@if (Model.Where(e => e.Title != null && e.DateReturned == null).Count()==0)
+@if (Model.Where(e => e.Title != null && e.DateReturned != null).Count()==0)
 {
     <div><i>No renting history to show</i></div>
 }
