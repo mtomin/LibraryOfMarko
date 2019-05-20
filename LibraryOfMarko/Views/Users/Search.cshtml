@@ -23,10 +23,11 @@
 </form>
 
 @if (Model != null)
-{
-    foreach (User user in Model)
-    {
+{ 
+    <br>
+        foreach (User user in Model)
+        {
         <p><a asp-controller="Users" asp-action="UserDetails" asp-route-id="@user.ID">@user.LastName, @user.FirstName</a></p>;
-    }
+        }
 }
 
